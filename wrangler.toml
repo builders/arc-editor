@@ -1,0 +1,19 @@
+name = "arc-editor"
+main = "worker/index.ts"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+# Serve index.html for unmatched paths (SPA routing for Tina admin)
+not_found_handling = "single-page-application"
+
+# Custom domain configured in Cloudflare dashboard:
+# Workers & Pages → arc-editor → Settings → Domains & Routes → Custom Domains
+# Target: editor.bldrs.co
+
+[vars]
+# Non-secret vars here.
+# PUBLIC_TINA_CLIENT_ID and TINA_TOKEN are set as secrets in the
+# Cloudflare dashboard: Workers & Pages → arc-editor → Settings → Variables & Secrets

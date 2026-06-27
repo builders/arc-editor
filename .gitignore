@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env.local
+.DS_Store
+
+# Tina generated files (rebuilt on every tinacms build/dev)
+tina/__generated__/
+public/admin/
