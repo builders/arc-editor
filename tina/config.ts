@@ -4,10 +4,18 @@ const branch = process.env.TINA_PUBLIC_EDIT_BRANCH ?? 'main'
 
 // ISO date-prefixed slug: 2026-06-27-my-title (flat, no subdirectories)
 function slugifyWithDate(title?: string, date?: string): string {
-  const d = date ? new Date(date) : new Date()
-  const yyyy = d.getFullYear()
-  const mm   = String(d.getMonth() + 1).padStart(2, '0')
-  const dd   = String(d.getDate()).padStart(2, '0')
+  // Parse YYYY-MM-DD directly to avoid timezone offset shifting the day.
+  // new Date("2026-03-10") parses as UTC midnight, which becomes the previous
+  // day in any timezone behind UTC (all US timezones).
+  let yyyy: string, mm: string, dd: string
+  if (date && /^\d{4}-\d{2}-\d{2}/.test(date)) {
+    ;[yyyy, mm, dd] = date.slice(0, 10).split('-')
+  } else {
+    const d = new Date()
+    yyyy = String(d.getFullYear())
+    mm   = String(d.getMonth() + 1).padStart(2, '0')
+    dd   = String(d.getDate()).padStart(2, '0')
+  }
   const slug = (title ?? 'untitled')
     .toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
