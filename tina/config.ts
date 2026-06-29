@@ -2,7 +2,7 @@ import { defineConfig } from 'tinacms'
 
 const branch = process.env.TINA_PUBLIC_EDIT_BRANCH ?? 'main'
 
-// Date-prefixed slug: 2026/06/27-my-title
+// ISO date-prefixed slug: 2026-06-27-my-title (flat, no subdirectories)
 function slugifyWithDate(title?: string, date?: string): string {
   const d = date ? new Date(date) : new Date()
   const yyyy = d.getFullYear()
@@ -14,7 +14,7 @@ function slugifyWithDate(title?: string, date?: string): string {
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 60)
-  return `${yyyy}/${mm}/${dd}-${slug}`
+  return `${yyyy}-${mm}-${dd}-${slug}`
 }
 
 export default defineConfig({
